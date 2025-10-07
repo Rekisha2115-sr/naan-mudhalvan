@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Stock Ticker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .ticker-container {
+      background-color: #fff;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .ticker {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 10px;
+      animation: scroll 20s linear infinite;
+    }
+
+    .ticker-item {
+      display: inline-block;
+      margin-right: 30px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .up {
+      color: green;
+    }
+
+    .down {
+      color: red;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+    }
+
+    button {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: none;
+      background-color: #1e1e1e;
+      color: white;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Real-Time Stock Ticker</h1>
+</header>
+
+<div class="search-container">
+  <input type="text" placeholder="Search Stock Symbol..." id="stockInput">
+  <button onclick="addStock()">Add</button>
+</div>
+
+<div class="ticker-container">
+  <div class="ticker" id="ticker">
+    <span class="ticker-item up">AAPL ↑ 175.30</span>
+    <span class="ticker-item down">TSLA ↓ 689.50</span>
+    <span class="ticker-item up">GOOGL ↑ 2800.75</span>
+    <span class="ticker-item down">AMZN ↓ 3450.20</span>
+  </div>
+</div>
+
+<script>
+  const ticker = document.getElementById('ticker');
+  
+  function addStock() {
+    const input = document.getElementById('stockInput');
+    const symbol = input.value.trim().toUpperCase();
+    if(symbol) {
+      const item = document.createElement('span');
+      item.className = 'ticker-item up';
+      item.textContent = ${symbol} ↑ 0.00;
+      ticker.appendChild(item);
+      input.value = '';
+    }
+  }
+
+  // Example: Simulate random price changes
+  setInterval(() => {
+    const items = document.querySelectorAll('.ticker-item');
+    items.forEach(item => {
+      const change = (Math.random() * 10 - 5).toFixed(2); // random ±5
+      const symbol = item.textContent.split(' ')[0];
+      const price = (Math.random() * 1000 + 100).toFixed(2);
+      item.textContent = ${symbol} ${change >= 0 ? '↑' : '↓'} ${price};
+      item.className = ticker-item ${change >= 0 ? 'up' : 'down'};
+    });
+  }, 5000); // update every 5 seconds
+</script>
+
+</body>
+</html>
